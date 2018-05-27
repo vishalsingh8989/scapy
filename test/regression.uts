@@ -993,7 +993,7 @@ x is not None and ICMPv6EchoReply in x and x[ICMPv6EchoReply].type == 129
 * is not reachable or down.
 old_debug_dissector = conf.debug_dissector
 conf.debug_dissector = False
-dns_ans = sr1(IP(dst="resolver1.opendns.com")/UDP()/DNS(rd=1,qd=DNSQR(qname="www.slashdot.com")),timeout=5)
+dns_ans = sr1(IP(dst="8.8.8.8")/UDP()/DNS(rd=1,qd=DNSQR(qname="www.slashdot.com")),timeout=5)
 conf.debug_dissector = old_debug_dissector
 DNS in dns_ans
 
