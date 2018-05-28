@@ -17,6 +17,9 @@ fi
 # Install wireshark data
 if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_SUDO" = "true" ]
 then
+  sudo delgroup wireshark
+  sudo addgroup --quiet --system wireshark
+  sudo apt-get install --reinstall wireshark
   sudo apt-get -qy install tshark
   sudo apt-get -qy install can-utils build-essential linux-headers-$(uname -r);
 fi
