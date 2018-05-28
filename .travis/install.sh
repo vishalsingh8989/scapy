@@ -17,15 +17,7 @@ fi
 # Install wireshark data
 if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_SUDO" = "true" ]
 then
-  sudo apt-get install ppa-purge
-  sudo apt-get install aptitude
-  sudo aptitude clean
-  sudo ppa-purge ppa:dreibh/ppa
-  sudo aptitude remove tshark
-  sudo apt-add-repository ppa:dreibh/ppa
-  sudo aptitude install wireshark
-
-  #sudo apt-get -qyf install tshark
+  sudo apt-get -qy install wireshark
   sudo apt-get -qy install can-utils build-essential linux-headers-$(uname -r);
 fi
 
