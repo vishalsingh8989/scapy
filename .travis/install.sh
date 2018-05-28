@@ -17,7 +17,7 @@ fi
 # Install wireshark data
 if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_SUDO" = "true" ]
 then
-  sudo delgroup wireshark
+  sudo delgroup tshark
   sudo addgroup --quiet --system tshark
   sudo apt-get install --reinstall tshark
   sudo apt-get -qy install tshark
