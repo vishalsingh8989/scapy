@@ -1,0 +1,45 @@
+% Regression tests for the VTP layer
+
+# More informations at http://www.secdev.org/projects/UTscapy/
+
+
+############
+############
+
++ Basic VTP test
+
+= Load module
+load_contrib("vtp")
+
+= Basic VTP packet creation
+packet = VTP()
+packet.show()
+
+= Basic Vlan Info packet creation
+packet = VTPVlanInfo()
+packet.show()
+
+= Basic VTP Vlan Info packet creation 1
+vlaninfopacket = VTPVlanInfo()
+packet = VTP(vlaninfo = vlaninfopacket)
+assert(packet.vlaninfo[0].len == 20)
+assert(packet.vlaninfo[0].vlannamelen == 7)
+assert(packet.vlaninfo[0].vlanname == "default")
+packet.show()
+
+
+= Custom VTP Vlan Info packet creation
+vlaninfopacket = VTPVlanInfo(vlanname = "Engineering")
+packet = VTP(vlaninfo = vlaninfopacket)
+assert(packet.vlaninfo[0].len == 24)
+assert(packet.vlaninfo[0].vlannamelen == 11)
+assert(packet.vlaninfo[0].vlanname == "Engineering")
+packet.show()
+
+= VTP Vlan Info packet creation in IEEE 802.1Q (dot1q) frames
+vlaninfopacket = VTPVlanInfo()
+packet = Dot1Q()/VTP(vlaninfo = vlaninfopacket)
+assert(packet.vlaninfo[0].len == 20)
+assert(packet.vlaninfo[0].vlannamelen == 7)
+assert(packet.vlaninfo[0].vlanname == "default")
+packet.show()
