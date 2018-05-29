@@ -117,8 +117,11 @@ class VTPVlanInfo(Packet):
 
     def __init__(self, *args, **kargs):
 
+
+
+
         kargs["vlannamelen"] = len(kargs.get("vlanname", "default"))
-        kargs["len"]  = VTP_VLAN_INFO_FIXED_PART_LEN + (4 * ((kargs["vlannamelen"] + 3) / 4))
+        kargs["len"]  = VTP_VLAN_INFO_FIXED_PART_LEN + (4 * int(((kargs["vlannamelen"] + 3) / 4)))
 
         if "tlvlist" in kargs:
             for tlv in kargs.get("tlvlist",[]):
