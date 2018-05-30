@@ -59,9 +59,10 @@ from scapy.fields import *
 from scapy.layers.l2 import *
 
 
-#VTP VINFO len fixed part
+# VTP VINFO len fixed part
 VTP_VLAN_INFO_FIXED_PART_LEN = 12
-VTP_VLAN_INFO_TLV_FIXED_PART_LEN = 2 #1 byte for type, 1 byte for length.
+# 1 byte for type, 1 byte for length.
+VTP_VLAN_INFO_TLV_FIXED_PART_LEN = 2
 
 _VTP_VLAN_TYPE = {
     1: 'Ethernet',
@@ -117,16 +118,14 @@ class VTPVlanInfo(Packet):
 
     def __init__(self, *args, **kargs):
 
-
-
-
         kargs["vlannamelen"] = len(kargs.get("vlanname", "default"))
-        kargs["len"]  = VTP_VLAN_INFO_FIXED_PART_LEN + (4 * int(((kargs["vlannamelen"] + 3) / 4)))
+        kargs["len"] = VTP_VLAN_INFO_FIXED_PART_LEN + (4 * int(((kargs["vlannamelen"] + 3) / 4)))  # noqa: E501
 
         if "tlvlist" in kargs:
-            for tlv in kargs.get("tlvlist",[]):
-                kargs["len"]  = kargs["len"] + VTP_VLAN_INFO_TLV_FIXED_PART_LEN + len(tlv.fields.get("value", ""))
-        Packet.__init__(self,*args, **kargs)
+            for tlv in kargs.get("tlvlist", []):
+                kargs["len"] = kargs["len"] + VTP_VLAN_INFO_TLV_FIXED_PART_LEN + len(tlv.fields.get("value", ""))  # noqa: E501
+
+        Packet.__init__(self, *args, **kargs)
 
     def post_build(self, p, pay):
         vlannamelen = 4 * ((len(self.vlanname) + 3) / 4)
